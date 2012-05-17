@@ -34,4 +34,7 @@ unless first_word.length is second_word.length
 
 chain = new Chain first_word, second_word
 chain.addWord word for word in read('./share/words').toString().toLowerCase().split('\n')
-chain.print()
+try
+    chain.print()
+catch err
+    console.log err

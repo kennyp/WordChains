@@ -49,7 +49,9 @@ class Chain
 
   @property 'links', get: () ->
     links = [@first_word, @second_word]
+    return links if @first_word is @second_word
     middleLinks = @findMiddleLinks()
+    throw new Error('No chain found!') if middleLinks is no
     links.insert 1, middleLinks
 
   findMiddleLinks: ->
