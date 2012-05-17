@@ -1,4 +1,5 @@
 #!/usr/bin/env coffee
+# vim: set ft=coffee:
 #------------------------------------------------------------------------------#
 # This file is part of WordChains.
 
@@ -20,7 +21,6 @@ read = require('fs').readFileSync
 Chain = require('./lib/chain')
 
 [_, script, _, first_word, second_word] = process.argv
-[first_word, second_word] = (w.toLowerCase() for w in [first_word, second_word] when w)
 
 exit = (message...) ->
   console.error.apply this, message

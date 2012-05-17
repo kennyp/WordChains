@@ -30,6 +30,7 @@ class Chain
 
   addWord: (word) ->
     if word.length is @wordLength
+      word = word.toLowerCase()
       for w in (word.nulify(i) for i in @wordRange)
         @related[w] ?= []
         @related[w].push word
