@@ -20,3 +20,6 @@ describe 'Chain', ->
   it 'should throw an exception if a chain can not be made', ->
     chain = new Chain('fire', 'dogs')
     (-> chain.links).should.throw('No chain found!')
+
+  it 'should throw an exception if two words are not provided', ->
+    (-> new Chain()).should.throw('Two words are required!')

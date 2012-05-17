@@ -15,43 +15,37 @@
 # along with WordChains.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------#
 require './extensions'
-alphabet = (String.fromCharCode(i) for i in [97..122])
-
-permutate = (parts) ->
-    [parts[0], letter, parts[1]].join('') for letter in alphabet
 
 class Chain
   constructor: (first_word, second_word, words = []) ->
-    @first_word = first_word.toLowerCase() if first_word
-    @second_word = second_word.toLowerCase() if second_word
+    throw new Error('Two words are required!') unless first_word and second_word
+    [@first_word, @second_word] = (w.toLowerCase() for w in [first_word, second_word])
     @related = {}
-    @addWord @first_word
-    @addWord @second_word
-    @addWord word for word in words
+    @wordLength = @first_word.length
+    @wordRange = [0..(@wordLength - 1)]
+    @addWord word for word in [@first_word, @second_word].concat(words)
 
   print: ->
     console.log link for link in @links
 
   addWord: (word) ->
-    if word.length is @first_word.length
-      for w in (word.nulify(i) for i in [0..(word.length-1)])
+    if word.length is @wordLength
+      for w in (word.nulify(i) for i in @wordRange)
         @related[w] ?= []
         @related[w].push word
 
   relatedWords: (word) ->
     related = []
-    for i in [0..(word.length-1)]
+    for i in @wordRange
       nword = word.nulify(i)
-      if @related.hasOwnProperty nword
-        for w in @related[nword]
-          related.push w
+      related.push w for w in @related[nword] if @related.hasOwnProperty nword
     related
 
   @property 'links', get: () ->
     links = [@first_word, @second_word]
     return links if @first_word is @second_word
     middleLinks = @findMiddleLinks()
-    throw new Error('No chain found!') if middleLinks is no
+    throw new Error('No chain found!') unless middleLinks
     links.insert 1, middleLinks
 
   findMiddleLinks: ->
