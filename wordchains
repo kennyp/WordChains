@@ -37,4 +37,4 @@ chain.addWord word for word in read('./share/words').toString().toLowerCase().sp
 try
   chain.print()
 catch err
-  console.log err
+  exit err
