@@ -16,3 +16,7 @@ describe 'Chain', ->
   it 'should be able to solve when the words differ by three letters', ->
     chain = new Chain('Fig', 'BAT', ['bag', 'big'])
     chain.links.should.eql ['fig', 'big', 'bag', 'bat']
+
+  it 'should throw an exception if a chain can not be made', ->
+    chain = new Chain('fire', 'dogs')
+    (-> chain.links).should.throw('No chain found!')
