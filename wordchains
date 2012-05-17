@@ -1,19 +1,19 @@
 #!/usr/bin/env coffee
 #------------------------------------------------------------------------------#
-# This file is part of wordchains.
+# This file is part of WordChains.
 
-# Foobar is free software: you can redistribute it and/or modify
+# WordChains is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 
-# wordchains is distributed in the hope that it will be useful,
+# WordChains is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 
 # You should have received a copy of the GNU Lesser General Public License
-# along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+# along with WordChains.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------#
 read = require('fs').readFileSync
 
@@ -23,18 +23,18 @@ Chain = require('./lib/chain')
 [first_word, second_word] = (w.toLowerCase() for w in [first_word, second_word] when w)
 
 exit = (message...) ->
-    console.error.apply this, message
-    process.exit 1
+  console.error.apply this, message
+  process.exit 1
 
 unless first_word and second_word
-    exit 'Usage: %s words first_word second_word', script
+  exit 'Usage: %s words first_word second_word', script
 
 unless first_word.length is second_word.length
-    exit 'Both words must be the same length!'
+  exit 'Both words must be the same length!'
 
 chain = new Chain first_word, second_word
 chain.addWord word for word in read('./share/words').toString().toLowerCase().split('\n')
 try
-    chain.print()
+  chain.print()
 catch err
-    console.log err
+  console.log err
